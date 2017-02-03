@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/ravikalla/springboot-mongo-fongo.svg?branch=master)](https://travis-ci.org/ravikalla/springboot-mongo-fongo)
+
 # SpringBoot with MongoDB and Fongo for integration testing
 WIP - Working on integration testing
 
