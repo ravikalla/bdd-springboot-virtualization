@@ -1,4 +1,4 @@
-package in.ravikalla;
+package in.ravikalla.stepdef;
 
 import java.io.IOException;
 
@@ -9,10 +9,11 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import cucumber.api.java.Before;
+import in.ravikalla.Application;
 
 @WebAppConfiguration
 @ContextConfiguration(classes = Application.class)
-public class Stepdefs {
+public class StepDefinitions {
 	@Autowired private WebApplicationContext context;
 
 	@Before
