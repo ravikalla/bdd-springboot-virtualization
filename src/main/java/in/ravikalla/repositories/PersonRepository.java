@@ -10,6 +10,8 @@ import in.ravikalla.bean.Person;
 public interface PersonRepository extends MongoRepository<Person, String> {
 	public Person findByFirstName(String firstName);
 
+	public List<Person> findAll();
+
 	public List<Person> findByLastName(String lastName); // List<Person> findByLastName(@Param("name") String name);
 
 	public Person findById(String id);

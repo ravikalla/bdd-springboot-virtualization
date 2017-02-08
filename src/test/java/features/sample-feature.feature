@@ -1,8 +1,16 @@
 Feature: EndToEnd test for SpringBoot_MongoDB
 
+@StartingScenario
+Scenario Outline: Starting scenario description
+	When Step starting desc "<ScenarioNumber>", "<FirstName>", "<LastName>"
+	Examples:
+	|ScenarioNumber|FirstName|LastName|
+	|1             |Ravi     |Kalla   |
+	|2             |Ravi1    |Kalla1  |
+
 @FirstScenario
 Scenario Outline: First scenario description
-	Given Step one desc "<ScenarioNumber>", "<FirstName>", "<LastName>"
+	When Step one desc "<ScenarioNumber>", "<FirstName>", "<LastName>"
 	Examples:
 	|ScenarioNumber|FirstName|LastName|
 	|1             |Ravi     |Kalla   |
@@ -10,8 +18,9 @@ Scenario Outline: First scenario description
 
 @SecondScenario
 Scenario Outline: Second scenario description
-	Given Step two desc "<ScenarioNumber>", "<FirstName>", "<LastName>"
+	When Step two desc "<ScenarioNumber>", "<FirstName>", "<LastName>"
 	Examples:
 	|ScenarioNumber|FirstName|LastName|
 	|1             |Ravi     |Kalla   |
 	|2             |Ravi1    |Kalla1  |
+	

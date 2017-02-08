@@ -66,24 +66,41 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-		    <groupId>info.cukes</groupId>
-		    <artifactId>cucumber-junit</artifactId>
-		    <version>1.2.5</version>
+			<groupId>info.cukes</groupId>
+			<artifactId>cucumber-java</artifactId>
+			<version>1.2.5</version>
 		</dependency>
 		<dependency>
-		    <groupId>info.cukes</groupId>
-		    <artifactId>cucumber-spring</artifactId>
-		    <version>1.2.5</version>
+			<groupId>info.cukes</groupId>
+			<artifactId>cucumber-java8</artifactId>
+			<version>1.2.5</version>
 		</dependency>
 		<dependency>
-		    <groupId>info.cukes</groupId>
-		    <artifactId>cucumber-java</artifactId>
-		    <version>1.2.5</version>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test-mvc-htmlunit</artifactId>
+			<version>1.0.0.M1</version>
+			<scope>test</scope>
 		</dependency>
 		<dependency>
-		    <groupId>info.cukes</groupId>
-		    <artifactId>cucumber-java8</artifactId>
-		    <version>1.2.5</version>
+			<groupId>info.cukes</groupId>
+			<artifactId>cucumber-spring</artifactId>
+			<version>1.2.5</version>
+		</dependency>
+		<dependency>
+			<groupId>info.cukes</groupId>
+			<artifactId>cucumber-junit</artifactId>
+			<version>1.2.5</version>
+		</dependency>
+		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-htmlunit-driver</artifactId>
+			<version>2.40.0</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.17</version>
 		</dependency>
 	</dependencies>
 
@@ -103,4 +120,24 @@
 			</plugin>
 		</plugins>
 	</build>
+
+	<repositories>
+		<repository>
+			<id>spring-milestone</id>
+			<url>http://repo.spring.io/libs-milestone</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
+
+	<pluginRepositories>
+		<pluginRepository>
+			<id>spring-milestone</id>
+			<url>http://repo.spring.io/libs-milestone</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</pluginRepository>
+	</pluginRepositories>
 </project>
