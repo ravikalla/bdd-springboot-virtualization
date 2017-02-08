@@ -1,8 +1,5 @@
 package in.ravikalla.stepdef;
 
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.verify;
-
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -19,8 +16,6 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.context.WebApplicationContext;
 
 import com.google.gson.reflect.TypeToken;
 
@@ -31,9 +26,6 @@ import in.ravikalla.bean.Person;
 import in.ravikalla.repositories.PersonRepository;
 import in.ravikalla.utils.TestUtils;
 
-//@ContextConfiguration(classes=ShibaApplication.class, loader=SpringApplicationContextLoader.class)
-//@IntegrationTest
-
 @TestPropertySource("/application.yml")
 public class StepDef implements En {
 
@@ -41,13 +33,10 @@ public class StepDef implements En {
 
 	private static String PERSON_ID;
 
+	@Autowired
 	private MockMvc mockMvc;
 
-//	@Autowired
 	public PersonRepository personRepository;
-
-	@Autowired
-	private WebApplicationContext webApplicationContext;
 
 	private final String URL_SAVE_PERSON = "/saveperson";
 	private final String URL_GET_PERSONS = "/persons";
@@ -60,8 +49,6 @@ public class StepDef implements En {
 	public void setup() throws IOException {
 		l.info("Start : PersonControllerTest.setUp()");
 
-		mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
-
 		objPerson5 = stubPersons(5);
 		objPerson6 = stubPersons(6);
 
@@ -71,94 +58,101 @@ public class StepDef implements En {
 	}
 
 	public StepDef() {
-		Given("^Step starting desc \"([^\"]*)\", \"([^\"]*)\", \"([^\"]*)\"$", (String strScenarioNumber, String strFirstName, String strlastName) -> {
-			l.info("Start : PersonControllerTest.testPersonSave() : " + strScenarioNumber + " : "
-						+ strFirstName + " : " + strlastName);
+		Given("^Step starting desc \"([^\"]*)\", \"([^\"]*)\", \"([^\"]*)\"$",
+				(String strScenarioNumber, String strFirstName, String strlastName) -> {
+					l.info("Start : PersonControllerTest.testPersonSave() : " + strScenarioNumber + " : " + strFirstName
+							+ " : " + strlastName);
 
-			String strPerson5JSON = TestUtils.objectToJson(objPerson5);
-			MvcResult result;
-			try {
-				result = mockMvc.perform(MockMvcRequestBuilders.post(URL_SAVE_PERSON)
-						.contentType(MediaType.APPLICATION_JSON_UTF8).content(strPerson5JSON).accept(MediaType.APPLICATION_JSON_UTF8))//.andExpect(status().isOk())
-						.andReturn();
+					String strPerson5JSON = TestUtils.objectToJson(objPerson5);
+					MvcResult result;
+					try {
+						result = mockMvc
+								.perform(MockMvcRequestBuilders.post(URL_SAVE_PERSON)
+										.contentType(MediaType.APPLICATION_JSON_UTF8).content(strPerson5JSON)
+										.accept(MediaType.APPLICATION_JSON_UTF8))// .andExpect(status().isOk())
+								.andReturn();
 
-				Assert.assertEquals("Inserted record", 201, result.getResponse().getStatus());
+						Assert.assertEquals("Inserted record", 201, result.getResponse().getStatus());
 
-				l.info("One User : Content : " + result.getResponse().getContentAsString());
-	
-				// Verify that the method is called atleast once
-//				verify(personRepository).save(any(Person.class));
+						l.info("Save person response content : " + result.getResponse().getContentAsString());
 
-				Collection<String> headerNames = result.getResponse().getHeaderNames();
-				headerNames.forEach(strHeaderName -> {l.debug("140 : Header name in the response after saving : " + strHeaderName);});
-				Person objPerson = TestUtils.jsonToObject(result.getResponse().getContentAsString(), Person.class);
-	
-				l.info("End : PersonControllerTest.testPersonSave() : " + ((null == objPerson)?"Object not present":objPerson.getFirstName()));
-			} catch (Exception e) {
-				l.info("102 : Exception e : " + e);
-				Assert.fail("Exception e : " + e);
-			}
-		});
+						// Verify that the method is called atleast once
+						// verify(personRepository).save(any(Person.class));
 
-		Given("^Step one desc \"([^\"]*)\", \"([^\"]*)\", \"([^\"]*)\"$", (String strScenarioNumber, String strFirstName, String strlastName) -> {
-				System.out.println("Start : PersonControllerTest.testPersonFindAll() : " + strScenarioNumber + " : "
-						+ strFirstName + " : " + strlastName);
-				l.info("Start : PersonControllerTest.testPersonFindAll() : " + strScenarioNumber + " : "
-						+ strFirstName + " : " + strlastName);
-				try {
-					MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post(URL_GET_PERSONS)
-							.contentType(MediaType.APPLICATION_JSON_UTF8).accept(MediaType.APPLICATION_JSON_UTF8)
-							.content(TestUtils.objectToJson(objPerson5))).andReturn();
+						Collection<String> headerNames = result.getResponse().getHeaderNames();
+						headerNames.forEach(strHeaderName -> {
+							l.debug("140 : Header name in the response after saving : " + strHeaderName);
+						});
+						Person objPerson = TestUtils.jsonToObject(result.getResponse().getContentAsString(),
+								Person.class);
 
-					Assert.assertEquals("Got success response while getting all persons", 200,
-							result.getResponse().getStatus());
+						l.info("End : PersonControllerTest.testPersonSave() : "
+								+ ((null == objPerson) ? "Object not present" : objPerson.getFirstName()));
+					} catch (Exception e) {
+						l.info("102 : Exception e : " + e);
+						Assert.fail("Exception e : " + e);
+					}
+				});
 
-					l.info("All Users : Content : " + result.getResponse().getContentAsString());
+		Given("^Step one desc \"([^\"]*)\", \"([^\"]*)\", \"([^\"]*)\"$",
+				(String strScenarioNumber, String strFirstName, String strlastName) -> {
+					System.out.println("Start : PersonControllerTest.testPersonFindAll() : " + strScenarioNumber + " : "
+							+ strFirstName + " : " + strlastName);
+					l.info("Start : PersonControllerTest.testPersonFindAll() : " + strScenarioNumber + " : "
+							+ strFirstName + " : " + strlastName);
+					try {
+						MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post(URL_GET_PERSONS)
+								.contentType(MediaType.APPLICATION_JSON_UTF8).accept(MediaType.APPLICATION_JSON_UTF8)
+								.content(TestUtils.objectToJson(objPerson5))).andReturn();
 
-//					// Verify that the method is called atleast once
-//					verify(personRepository).findAll();
+						Assert.assertEquals("Got success response while getting all persons", 200,
+								result.getResponse().getStatus());
 
-					Type listType = new TypeToken<ArrayList<Person>>() {
-					}.getType();
+						l.info("All Users : Content : " + result.getResponse().getContentAsString());
 
-					List<Person> lstPersons = TestUtils.jsonToObject(result.getResponse().getContentAsString(),
-							listType);
-					l.info("End : PersonControllerTest.testPersonFindAll() : " + lstPersons.size() + " : "
-							+ lstPersons.get(0).getFirstName() + " : " + (PERSON_ID = lstPersons.get(0).getId()));
-				} catch (Exception e) {
-					l.info("102 : Exception e : " + e);
-					Assert.fail("Exception e : " + e);
-				}
-			});
+						// Verify that the method is called atleast once
+						// verify(personRepository).findAll();
 
-		Given("^Step two desc \"([^\"]*)\", \"([^\"]*)\", \"([^\"]*)\"$", (String strScenarioNumber, String strFirstName, String strlastName) -> {
-			l.info("Start : PersonControllerTest.testPersonFindById() : " + strScenarioNumber + " : "
-					+ strFirstName + " : " + strlastName);
-			try {
-				MvcResult result = mockMvc
-						.perform(MockMvcRequestBuilders.post(URL_GET_PERSON + PERSON_ID)
-								.contentType(MediaType.APPLICATION_JSON_UTF8)
-								.accept(MediaType.APPLICATION_JSON_UTF8)
+						Type listType = new TypeToken<ArrayList<Person>>() {
+						}.getType();
+
+						List<Person> lstPersons = TestUtils.jsonToObject(result.getResponse().getContentAsString(),
+								listType);
+						l.info("End : PersonControllerTest.testPersonFindAll() : " + lstPersons.size() + " : "
+								+ lstPersons.get(0).getFirstName() + " : " + (PERSON_ID = lstPersons.get(0).getId()));
+					} catch (Exception e) {
+						l.info("102 : Exception e : " + e);
+						Assert.fail("Exception e : " + e);
+					}
+				});
+
+		Given("^Step two desc \"([^\"]*)\", \"([^\"]*)\", \"([^\"]*)\"$",
+				(String strScenarioNumber, String strFirstName, String strlastName) -> {
+					l.info("Start : PersonControllerTest.testPersonFindById() : " + strScenarioNumber + " : "
+							+ strFirstName + " : " + strlastName);
+					try {
+						MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post(URL_GET_PERSON + PERSON_ID)
+								.contentType(MediaType.APPLICATION_JSON_UTF8).accept(MediaType.APPLICATION_JSON_UTF8)
 								.content(TestUtils.objectToJson(objPerson6)))// .andExpect(status().isOk())
-						.andReturn();
+								.andReturn();
 
-				Assert.assertEquals("Got success response while getting one", 200,
-						result.getResponse().getStatus());
+						Assert.assertEquals("Got success response while getting one", 200,
+								result.getResponse().getStatus());
 
-				l.info("One User : Content : " + result.getResponse().getContentAsString());
+						l.info("One User : Content : " + result.getResponse().getContentAsString());
 
-				// Verify that the method is called atleast once
-//				verify(personRepository).findById(any(String.class));
+						// Verify that the method is called atleast once
+						// verify(personRepository).findById(any(String.class));
 
-				Person objPersons = TestUtils.jsonToObject(result.getResponse().getContentAsString(),
-						Person.class);
+						Person objPersons = TestUtils.jsonToObject(result.getResponse().getContentAsString(),
+								Person.class);
 
-				l.info("End : PersonControllerTest.testPersonFindById() : " + objPersons.getFirstName());
-			} catch (Exception e) {
-				l.info("134 : Exception e : " + e);
-				Assert.fail("Exception e : " + e);
-			}
-		});
+						l.info("End : PersonControllerTest.testPersonFindById() : " + objPersons.getFirstName());
+					} catch (Exception e) {
+						l.info("134 : Exception e : " + e);
+						Assert.fail("Exception e : " + e);
+					}
+				});
 	}
 
 	public static Person stubPersons(int intCtr) {
