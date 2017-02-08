@@ -27,7 +27,7 @@ import in.ravikalla.service.PersonService;
 @RestController
 @Component
 public class PersonController {
-	Logger l = Logger.getLogger(this.getClass());
+	private Logger l = Logger.getLogger(this.getClass());
 
 	@Autowired
 	private PersonService personService;
