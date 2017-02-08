@@ -49,10 +49,10 @@ public class StepDef implements En {
 	public void setup() throws IOException {
 		l.info("Start : PersonControllerTest.setUp()");
 
+		personRepository = org.mockito.Mockito.mock(PersonRepository.class);
+
 		objPerson5 = stubPersons(5);
 		objPerson6 = stubPersons(6);
-
-		personRepository = org.mockito.Mockito.mock(PersonRepository.class);
 
 		l.info("End : PersonControllerTest.setUp()");
 	}

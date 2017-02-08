@@ -47,6 +47,16 @@ public class PersonController {
 		return personService.findById(id);
 	}
 
+	@RequestMapping("/deleteAll")
+	public void deleteAll() {
+		personService.deleteAll();
+	}
+
+	@RequestMapping("/deleteById")
+	public void deleteAll(@RequestParam(value = "id") final String id) {
+		personService.deleteById(id);
+	}
+
 	@RequestMapping(value = "/saveperson", method = RequestMethod.POST, consumes = "application/json")
 	public ResponseEntity<?> save(@RequestBody final Person person) {
 		l.debug("Start : PersonController.save(...)");

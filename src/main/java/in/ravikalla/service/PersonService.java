@@ -34,4 +34,12 @@ public class PersonService {
 	public Person findById(final String id) {
 		return personRepository.findById(id);
 	}
+
+	public void deleteAll() {
+		personRepository.deleteAll();
+	}
+
+	public void deleteById(final String id) {
+		personRepository.delete(id);
+	}
 }

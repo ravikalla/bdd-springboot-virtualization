@@ -1,0 +1,205 @@
+package in.ravikalla.stepdef;
+
+import java.io.IOException;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
+
+import javax.print.StreamPrintService;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.junit.Assert;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+
+import com.google.gson.reflect.TypeToken;
+
+import cucumber.api.DataTable;
+import cucumber.api.java.Before;
+import cucumber.api.java8.En;
+import in.ravikalla.bean.Company;
+import in.ravikalla.bean.Person;
+import in.ravikalla.bean.PersonForTest;
+import in.ravikalla.repositories.PersonRepository;
+import in.ravikalla.utils.TestUtils;
+
+@TestPropertySource("/application.yml")
+public class PersonRecordSteps implements En {
+
+	private static Log l = LogFactory.getLog(PersonRecordSteps.class);
+
+	private static String PERSON_ID;
+
+	@Autowired
+	private MockMvc mockMvc;
+
+	public PersonRepository personRepository;
+
+	private String URL_SAVE_PERSON = "/saveperson";
+	private String URL_GET_PERSONS = "/persons";
+	private String URL_GET_PERSON = "/person?id=";
+	private String URL_PUT_DELETEALL = "/deleteAll";
+	private String URL_PUT_DELETEBYID = "/deleteById?id=";
+
+	@Before
+	public void setup() throws IOException {
+		l.info("Start : PersonRecordSteps.setUp()");
+
+		personRepository = org.mockito.Mockito.mock(PersonRepository.class);
+
+		l.info("End : PersonControllerTest.setUp()");
+	}
+
+	public PersonRecordSteps() {
+		Given("^Database has no persons$",
+				() -> {
+					l.info("Start : Check if DB is empty");
+					try {
+						MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post(URL_GET_PERSONS)
+								.contentType(MediaType.APPLICATION_JSON_UTF8).accept(MediaType.APPLICATION_JSON_UTF8)).andReturn();
+
+						Assert.assertEquals("Got success response while getting all persons", 200,
+								result.getResponse().getStatus());
+
+						l.debug("All Users : Content when no data present : " + result.getResponse().getContentAsString());
+
+						// Verify that the method is called atleast once
+//						verify(personRepository).findAll();
+
+						Type listType = new TypeToken<ArrayList<Person>>() {}.getType();
+
+						List<Person> lstPersons = TestUtils.jsonToObject(result.getResponse().getContentAsString(), listType);
+
+						if ((null != lstPersons) && (0 != lstPersons.size()))
+							Assert.fail();
+						l.info("End : Check if DB is empty");
+					} catch (Exception e) {
+						l.info("78 : Exception e : " + e);
+						Assert.fail("Exception e : " + e);
+					}
+				});
+		And("^User inserted a person information$",
+				(DataTable objDataTable) -> {
+					l.debug("Start : PersonRecordSteps : insert records in DB");
+
+					List<PersonForTest> lstPersonForTest = objDataTable.asList(PersonForTest.class);
+					lstPersonForTest.forEach(objPersonForTest -> {
+						String strPerson5JSON = TestUtils.objectToJson(objPersonForTest.getPerson());
+						MvcResult result;
+						try {
+							result = mockMvc
+									.perform(MockMvcRequestBuilders.post(URL_SAVE_PERSON)
+											.contentType(MediaType.APPLICATION_JSON_UTF8).content(strPerson5JSON)
+											.accept(MediaType.APPLICATION_JSON_UTF8))// .andExpect(status().isOk())
+									.andReturn();
+
+							Assert.assertEquals("Inserted record", 201, result.getResponse().getStatus());
+
+							l.debug("Save person response content : " + result.getResponse().getContentAsString());
+
+							// Verify that the method is called atleast once
+//							verify(personRepository).save(any(Person.class));
+
+							Person objPersonInserted = TestUtils.jsonToObject(result.getResponse().getContentAsString(),
+									Person.class);
+
+							l.debug("Person object present : "
+									+ ((null == objPersonInserted) ? "Object not present" : objPersonInserted.getFirstName()));
+						} catch (Exception e) {
+							l.info("102 : Exception e : " + e);
+							Assert.fail("Exception e : " + e);
+						}
+					});
+					l.debug("End : PersonRecordSteps : insert records in DB");
+				});
+		Then("^Check if there are \"([^\"]*)\" users in the database$",
+				(String strUserCount) -> {
+					try {
+						l.info("Start : PersonRecordSteps : check user count in DB for : " + strUserCount);
+						MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post(URL_GET_PERSONS)
+								.contentType(MediaType.APPLICATION_JSON_UTF8).accept(MediaType.APPLICATION_JSON_UTF8)).andReturn();
+	
+						Assert.assertEquals("Got success response while getting all persons", 200,
+								result.getResponse().getStatus());
+	
+						l.info("All Users : Content : " + result.getResponse().getContentAsString());
+	
+						// Verify that the method is called atleast once
+//						verify(personRepository).findAll();
+	
+						Type listType = new TypeToken<ArrayList<Person>>() {
+						}.getType();
+	
+						List<Person> lstPersons = TestUtils.jsonToObject(result.getResponse().getContentAsString(),
+								listType);
+						l.debug("User count : " + lstPersons.size());
+						if (Integer.parseInt(strUserCount) != lstPersons.size())
+							Assert.fail();
+					} catch (Exception e) {
+						l.info("102 : Exception e : " + e);
+						Assert.fail("Exception e : " + e);
+					}
+					l.info("End : PersonRecordSteps : check user count in DB : " + strUserCount);
+				});
+
+		Given("^Delete all persons$",
+				() -> {
+					l.info("Start : PersonRecordSteps : delete all persons");
+					try {
+						MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post(URL_PUT_DELETEALL)).andReturn();
+
+						Assert.assertEquals("Got success response while deleting all persons", 200,
+								result.getResponse().getStatus());
+
+						// Verify that the method is called atleast once
+//						verify(personRepository).deleteAll();
+						l.info("End : PersonRecordSteps : delete all persons");
+					} catch (Exception e) {
+						l.info("102 : Exception e : " + e);
+						Assert.fail("Exception e : " + e);
+					}
+				});
+
+		Given("^AAA Step two desc \"([^\"]*)\", \"([^\"]*)\", \"([^\"]*)\"$",
+				(String strScenarioNumber, String strFirstName, String strlastName) -> {
+					l.info("Start : PersonControllerTest.testPersonFindById() : " + strScenarioNumber + " : "
+							+ strFirstName + " : " + strlastName);
+					try {
+						MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post(URL_GET_PERSON + PERSON_ID)
+								.contentType(MediaType.APPLICATION_JSON_UTF8).accept(MediaType.APPLICATION_JSON_UTF8))// .andExpect(status().isOk())
+								.andReturn();
+
+						Assert.assertEquals("Got success response while getting one", 200,
+								result.getResponse().getStatus());
+
+						l.info("One User : Content : " + result.getResponse().getContentAsString());
+
+						// Verify that the method is called atleast once
+						// verify(personRepository).findById(any(String.class));
+
+						Person objPersons = TestUtils.jsonToObject(result.getResponse().getContentAsString(),
+								Person.class);
+
+						l.info("End : PersonControllerTest.testPersonFindById() : " + objPersons.getFirstName());
+					} catch (Exception e) {
+						l.info("134 : Exception e : " + e);
+						Assert.fail("Exception e : " + e);
+					}
+				});
+	}
+
+	public static Person stubPersons(int intCtr) {
+		List<Company> lstCompanies = Arrays.asList(new Company("Infy" + intCtr, "Mysore" + intCtr));
+		int[] arrLocationCoordinates = { 1, 2 };
+		Person objPerson = new Person("Ravi" + intCtr, "Kalla" + intCtr, "IT" + intCtr, arrLocationCoordinates,
+				lstCompanies);
+		return objPerson;
+	}
+}

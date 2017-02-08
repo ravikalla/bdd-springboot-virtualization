@@ -16,7 +16,8 @@ import in.ravikalla.config.TestConfiguration;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(features = "classpath:features"
-		//, glue={"in.ravikalla.stepdef"}
+		, tags = {"~@SecondScenario"}
+		, glue={"in.ravikalla.stepdef"}
 		, plugin = { "pretty", "html:target/test-report" })
 @WebAppConfiguration
 @ContextConfiguration(classes = { TestConfiguration.class })
