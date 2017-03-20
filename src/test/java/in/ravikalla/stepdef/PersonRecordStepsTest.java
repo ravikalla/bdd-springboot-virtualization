@@ -1,5 +1,8 @@
 package in.ravikalla.stepdef;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -189,6 +192,34 @@ public class PersonRecordStepsTest implements En {
 						l.info("134 : Exception e : " + e);
 						Assert.fail("Exception e : " + e);
 					}
+				});
+		Then("^Create \"([^\"]*)\" file with name \"([^\"]*)\" content \"([^\"]*)\"$",
+				(String strFileFormat, String strFileName, String strContent) -> {
+					try {
+						l.debug("Start : PersonRecordSteps : Create CSV file : " + strFileFormat + " : " + strFileName + " : " + strContent);
+						BufferedWriter bw = null;
+						FileWriter fw = null;
+						try {
+							fw = new FileWriter(strFileName + "." + strFileFormat);
+							bw = new BufferedWriter(fw);
+							bw.write(strContent);
+						} catch (IOException e) {
+							l.error("207 : PersonRecordSteps : IOException e : " + e);
+						} finally {
+							try {
+								if (bw != null)
+									bw.close();
+								if (fw != null)
+									fw.close();
+							} catch (IOException ex) {
+								l.error("215 : PersonRecordSteps : IOException ex : " + ex);
+							}
+						}
+					} catch (Exception e) {
+						l.info("219 : PersonRecordSteps : Exception e : " + e);
+						Assert.fail("Exception e : " + e);
+					}
+					l.info("End : PersonRecordSteps : Create CSV file : " + strFileFormat + " : " + strFileName + " : " + strContent);
 				});
 	}
 

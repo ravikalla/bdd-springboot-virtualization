@@ -13,3 +13,7 @@ Scenario: Insert and count records
 Scenario: Check if person details are deleted in DB
 	Given Delete all persons
 	Then Check if there are "0" users in the database
+
+@UselessTests
+Scenario: Create CSV file for customizing Hygieia to read custom test results in CSV format
+	Given Create "csv" file with name "target/funcTestResults" content "test content"
