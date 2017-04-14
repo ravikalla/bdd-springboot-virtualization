@@ -3,7 +3,14 @@
 [![License](https://img.shields.io/badge/license-Apache%202-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
 
 # SpringBoot with MongoDB and Fongo for integration testing
-WIP - REST API virtualization 
+#### In-Code Virtualization Options:
+
+Tool / Technology | Virtualization option | Implemented?
+------------ | ------------- | -------------
+MongoDB | [Fongo](https://github.com/fakemongo/fongo.git) | Yes
+Oracle<br/>SQL Server<br/>MySQL<br/>DB2<br/>Apache Derby<br/>HSQLDB<br/>PostgreSQL | [H2 Database](https://github.com/h2database/h2database.git) | No
+REST API | [Hoverfly](https://github.com/SpectoLabs/hoverfly.git), [Hoverfly-Java](https://github.com/SpectoLabs/hoverfly-java.git) | WIP
+MessageQueues | [ActiveMQ](http://activemq.apache.org/how-to-unit-test-jms-code.html), RabbitMQ | No
 
 #### Before starting the application, start MongoDB:
  * sudo service mongod start
@@ -12,12 +19,3 @@ WIP - REST API virtualization
 
 #### Install MongoDB :
  * https://docs.mongodb.com/manual/tutorial/install-mongodb-on-ubuntu/
-
-#### In-Code Virtualization Options:
-
-Tool / Technology | Virtualization option
------------- | -------------
-MongoDB | [Fongo](https://github.com/fakemongo/fongo.git)
-Oracle<br/>SQL Server<br/>MySQL<br/>DB2<br/>Apache Derby<br/>HSQLDB<br/>PostgreSQL | [H2 Database](https://github.com/h2database/h2database.git)
-REST API | [Hoverfly](https://github.com/SpectoLabs/hoverfly.git), [Hoverfly-Java](https://github.com/SpectoLabs/hoverfly-java.git)
-MessageQueues | [ActiveMQ](http://activemq.apache.org/how-to-unit-test-jms-code.html), RabbitMQ
