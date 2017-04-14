@@ -3,9 +3,9 @@
 [![License](https://img.shields.io/badge/license-Apache%202-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
 
 # SpringBoot with MongoDB and Fongo for integration testing
-WIP - Working on integration testing
+WIP - REST API virtualization 
 
-#### Start MongoDB:
+#### Before starting the application, start MongoDB:
  * sudo service mongod start
  * sudo service mongod restart
  * sudo service mongod stop
