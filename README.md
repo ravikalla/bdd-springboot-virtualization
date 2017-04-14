@@ -12,3 +12,10 @@ WIP - Working on integration testing
 
 ####Install MongoDB :
  * https://docs.mongodb.com/manual/tutorial/install-mongodb-on-ubuntu/
+
+####In-Code Virtualization Options:
+Tool / Technology | Virtualization option
+----------------- | ---------------------
+MongoDB | [Fongo](https://github.com/fakemongo/fongo.git)
+IBM DB2, Apache Derby, HSQLDB, MS SQL Server, MySQL, Oracle, and PostgreSQL | [H2 Database](https://github.com/h2database/h2database.git)
+REST API | [Hoverfly](https://github.com/SpectoLabs/hoverfly.git), [Hoverfly-Java](https://github.com/SpectoLabs/hoverfly-java.git)
