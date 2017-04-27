@@ -1,0 +1,7 @@
+Feature: Test REST webservices
+
+@HoverflyTest
+Scenario: Test REST webservice
+	Given Simple webservice call
+	When Received simple webservice call response
+	Then Simple webservice call status is OK
