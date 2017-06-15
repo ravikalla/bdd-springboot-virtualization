@@ -41,4 +41,4 @@ Tool / Technology | Virtualization option | Implemented?
 MongoDB | [Fongo](https://github.com/fakemongo/fongo.git) | Yes
 Oracle<br/>SQL Server<br/>MySQL<br/>DB2<br/>Apache Derby<br/>HSQLDB<br/>PostgreSQL | [H2 Database](https://github.com/h2database/h2database.git) | No
 REST API | [Hoverfly](https://github.com/SpectoLabs/hoverfly.git), [Hoverfly-Java](https://github.com/SpectoLabs/hoverfly-java.git) | WIP
-MessageQueues | [ActiveMQ](http://activemq.apache.org/how-to-unit-test-jms-code.html), RabbitMQ | No
+MessageQueues | [ActiveMQ](http://activemq.apache.org/how-to-unit-test-jms-code.html) | No
