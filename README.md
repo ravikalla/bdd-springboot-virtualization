@@ -1,5 +1,6 @@
 [![Build Status](https://travis-ci.org/ravikalla/bdd-springboot-virtualization.svg?branch=master)](https://travis-ci.org/ravikalla/bdd-springboot-virtualization)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/7fb2edfd4a8d4147a5f647bc7feeeffb)](https://www.codacy.com/app/ravikalla/springboot-mongo-fongo?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=ravikalla/springboot-mongo-fongo&amp;utm_campaign=Badge_Grade)
+[![Issues](https://img.shields.io/github/issues/ravikalla/bdd-springboot-virtualization.svg?style=flat-square)](https://github.com/ravikalla/bdd-springboot-virtualization/issues)
 [![License](https://img.shields.io/badge/license-Apache%202-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
 
 # BDD with virtualization
