@@ -21,7 +21,6 @@ import org.springframework.test.context.ActiveProfiles;
 import cucumber.api.CucumberOptions;
 import cucumber.api.junit.Cucumber;
 import in.ravikalla.utils.TestUtils;
-import io.specto.hoverfly.junit.dsl.ResponseCreators;
 import io.specto.hoverfly.junit.rule.HoverflyRule;
 
 /**
@@ -48,7 +47,7 @@ public class BDDConfigurationTest {
 				service(URL_EXTERNAL_SITE)
 					.get(URI_BASE + URI_MONGO_GET_PERSONS)
 						.willReturn(
-								ResponseCreators.success(TestUtils.readFileFromDisk("src/test/resources/data/Response_AllPersons.json", Charset.defaultCharset()),
+								success(TestUtils.readFileFromDisk("src/test/resources/data/Response_AllPersons.json", Charset.defaultCharset()),
 										CONTENT_TYPE_APP_JSON).withDelay(1, TimeUnit.SECONDS))
 					.post(URI_BASE + URI_MONGO_SAVE_PERSON)
 						.body(TestUtils.readFileFromDisk("src/test/resources/data/Input_Persons1.json", Charset.defaultCharset()))

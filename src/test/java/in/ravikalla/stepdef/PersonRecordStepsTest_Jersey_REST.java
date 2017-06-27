@@ -1,31 +1,19 @@
 package in.ravikalla.stepdef;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.apache.log4j.Logger;
 import org.junit.Assert;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.IntegrationTest;
 import org.springframework.boot.test.SpringApplicationContextLoader;
-import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.web.WebAppConfiguration;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import com.google.gson.reflect.TypeToken;
 import com.jayway.restassured.RestAssured;
@@ -35,14 +23,11 @@ import cucumber.api.DataTable;
 import cucumber.api.java.Before;
 import cucumber.api.java8.En;
 import in.ravikalla.Application;
-import in.ravikalla.bean.Company;
 import in.ravikalla.bean.Person;
 import in.ravikalla.bean.PersonForTest;
-import in.ravikalla.repositories.PersonRepository;
 import in.ravikalla.service.PersonService;
 import in.ravikalla.util.BDDUtil;
 import in.ravikalla.utils.APICalls;
-import in.ravikalla.utils.TestUtils;
 
 @ContextConfiguration(classes = {
 		Application.class
@@ -57,12 +42,12 @@ public class PersonRecordStepsTest_Jersey_REST implements En {
 
 	@Mock
 	public PersonService personService;
-	Response response;
-	String strActualJSONContent;
-	String strActualXMLContent;
+	private Response response;
+	private String strActualJSONContent;
+	private String strActualXMLContent;
 
 	@Value("${local.server.port}")
-	int port;
+	private int port;
 
 	@Before
 	public void setup() throws IOException {
