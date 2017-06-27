@@ -26,16 +26,12 @@ import in.ravikalla.service.PersonService;
  */
 @RestController
 @Component
+@RequestMapping("/spring")
 public class PersonController {
 	private Logger l = Logger.getLogger(this.getClass());
 
 	@Autowired
 	private PersonService personService;
-
-//	@Autowired
-//	PersonController(final PersonService personService) {
-//		this.personService = personService;
-//	}
 
 	@RequestMapping("/persons")
 	public List<Person> findAll() {
