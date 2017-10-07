@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/ravikalla/bdd-springboot-virtualization.svg?branch=master)](https://travis-ci.org/ravikalla/bdd-springboot-virtualization)
+[![CircleCI](https://circleci.com/gh/ravikalla/bdd-springboot-virtualization.svg?style=svg)](https://circleci.com/gh/ravikalla/bdd-springboot-virtualization)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/7fb2edfd4a8d4147a5f647bc7feeeffb)](https://www.codacy.com/app/ravikalla/springboot-mongo-fongo?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=ravikalla/springboot-mongo-fongo&amp;utm_campaign=Badge_Grade)
 [![Issue Count](https://codeclimate.com/github/ravikalla/bdd-springboot-virtualization/badges/issue_count.svg)](https://codeclimate.com/github/ravikalla/bdd-springboot-virtualization)
 [![Issues](https://img.shields.io/github/issues/ravikalla/bdd-springboot-virtualization.svg?style=flat-square)](https://github.com/ravikalla/bdd-springboot-virtualization/issues)
