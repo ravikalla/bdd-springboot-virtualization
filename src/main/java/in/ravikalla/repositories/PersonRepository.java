@@ -1,6 +1,7 @@
 package in.ravikalla.repositories;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 
@@ -10,11 +11,15 @@ import in.ravikalla.bean.Person;
 public interface PersonRepository extends MongoRepository<Person, String> {
 	public Person findByFirstName(String firstName);
 
+	public List<Person> findByLastName(String lastName);
+
+	// These methods are inherited from MongoRepository, but explicitly declared for clarity
+	@Override
 	public List<Person> findAll();
 
-	public List<Person> findByLastName(String lastName); // List<Person> findByLastName(@Param("name") String name);
+	@Override
+	public Optional<Person> findById(String id);
 
-	public Person findById(String id);
-
+	@Override
 	public Person save(Person objPerson);
 }

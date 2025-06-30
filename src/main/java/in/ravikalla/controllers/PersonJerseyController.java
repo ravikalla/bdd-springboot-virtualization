@@ -11,7 +11,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -28,7 +29,7 @@ import in.ravikalla.util.BDDAppConstants;
 @Produces({MediaType.APPLICATION_JSON})
 @Component
 public class PersonJerseyController {
-	private Logger l = Logger.getLogger(this.getClass());
+	private static final Logger l = LoggerFactory.getLogger(PersonJerseyController.class);
 
 	@Autowired
 	private PersonService personService;

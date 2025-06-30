@@ -3,7 +3,8 @@ package in.ravikalla.controllers;
 import java.net.URI;
 import java.util.List;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Link;
 import org.springframework.http.HttpHeaders;
@@ -17,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import in.ravikalla.bean.Person;
-import in.ravikalla.linkcollectors.PersonResourceLnks;
+// import in.ravikalla.linkcollectors.PersonResourceLnks;
 import in.ravikalla.service.PersonService;
 
 /**
@@ -28,7 +29,7 @@ import in.ravikalla.service.PersonService;
 @Component
 @RequestMapping("/spring")
 public class PersonController {
-	private Logger l = Logger.getLogger(this.getClass());
+	private static final Logger l = LoggerFactory.getLogger(PersonController.class);
 
 	@Autowired
 	private PersonService personService;
@@ -59,10 +60,10 @@ public class PersonController {
 
 		Person savedPerson = personService.save(person);
 
-		Link linkOfAPerson = new PersonResourceLnks(savedPerson).getLink("self");
+		// Link linkOfAPerson = new PersonResourceLnks(savedPerson).getLink("self");
 
 		HttpHeaders httpHeaders = new HttpHeaders();
-		httpHeaders.setLocation(URI.create(linkOfAPerson.getHref()));
+		httpHeaders.setLocation(URI.create("/spring/person?id=" + savedPerson.getId()));
 
 		l.debug("End : PersonController.save(...)");
 		// httpHeaders.setLocation(ServletUriComponentsBuilder.fromCurrentRequest().path("person/{id}").buildAndExpand(savedPerson.getId()).toUri());
