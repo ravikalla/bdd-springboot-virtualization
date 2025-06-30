@@ -6,6 +6,6 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 @TestConfiguration
 @EnableMongoRepositories(basePackages = "in.ravikalla.repositories")
 public class TestMongoConfiguration {
-    // Spring Boot will auto-configure embedded MongoDB when de.flapdoodle.embed.mongo is on classpath
-    // No additional configuration needed for basic testing
+    // Spring Boot 3.x will auto-configure embedded MongoDB 
+    // when de.flapdoodle.embed.mongo.spring3x is on classpath
 }

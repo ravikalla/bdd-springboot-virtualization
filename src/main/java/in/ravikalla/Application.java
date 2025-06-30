@@ -1,27 +1,22 @@
 package in.ravikalla;
 
-import javax.servlet.ServletContextEvent;
-import javax.servlet.ServletContextListener;
+import jakarta.servlet.ServletContextEvent;
+import jakarta.servlet.ServletContextListener;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
 
 /**
+ * Modern Spring Boot 3.x Application
  * 
  * @author ravi kalla
- *
  */
-
-@EnableAutoConfiguration
-@Configuration
-@ComponentScan
+@SpringBootApplication
 public class Application {
-	private static Log l = LogFactory.getLog(Application.class);
+	private static final Logger logger = LoggerFactory.getLogger(Application.class);
 
 	@Bean
 	protected ServletContextListener listener() {
@@ -29,14 +24,19 @@ public class Application {
 
 			@Override
 			public void contextInitialized(ServletContextEvent sce) {
-				l.info("Application.ServletContextListener.contextInitialized(...) : ServletContext initialized : " + sce.getServletContext().getContextPath() + " : " + sce.getServletContext().getServerInfo() + " : " + sce.getServletContext().getVirtualServerName());
+				logger.info("ServletContext initialized: {} - {} - {}", 
+					sce.getServletContext().getContextPath(), 
+					sce.getServletContext().getServerInfo(), 
+					sce.getServletContext().getVirtualServerName());
 			}
 
 			@Override
 			public void contextDestroyed(ServletContextEvent sce) {
-				l.info("Application.ServletContextListener.contextDestroyed(...) : ServletContext destroyed : " + sce.getServletContext().getContextPath() + " : " + sce.getServletContext().getServerInfo() + " : " + sce.getServletContext().getVirtualServerName());
+				logger.info("ServletContext destroyed: {} - {} - {}", 
+					sce.getServletContext().getContextPath(), 
+					sce.getServletContext().getServerInfo(), 
+					sce.getServletContext().getVirtualServerName());
 			}
-
 		};
 	}
 

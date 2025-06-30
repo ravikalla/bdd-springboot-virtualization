@@ -8,17 +8,30 @@ spring:
       database: testdb
   mongodb:
     embedded:
-      version: 5.0.5
+      version: 7.0.5
+  
+  # Spring Boot 3.x specific configurations
+  application:
+    name: spring-boot-mongodb-bdd
 
 logging:
   level:
     org.springframework.data.mongodb: INFO
     de.flapdoodle.embed.mongo: INFO
     in.ravikalla: DEBUG
+    org.testcontainers: INFO
     
 management:
   endpoints:
+    web:
+      exposure:
+        include: health,info
     enabled-by-default: false
+  endpoint:
+    health:
+      enabled: true
+    info:
+      enabled: true
 
 # Test specific configurations
 gateway:

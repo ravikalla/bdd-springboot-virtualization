@@ -1,0 +1,38 @@
+server:
+  port: 8010
+  
+spring:
+  application:
+    name: spring-boot-mongodb-bdd
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: bdddb
+  
+  # Spring Boot 3.x web configurations
+  web:
+    resources:
+      cache:
+        cachecontrol:
+          max-age: 120s
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      enabled: true
+      show-details: when-authorized
+    info:
+      enabled: true
+    metrics:
+      enabled: true
+
+logging:
+  level:
+    org.springframework.data.mongodb: INFO
+    in.ravikalla: DEBUG
+    org.springframework.web: INFO
